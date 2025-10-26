@@ -15,8 +15,18 @@
         <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>mongodb</id>
+            <url>https://repo.mongodb.org/maven2</url>
+        </repository>
+    </repositories>
+
     <dependencies>
-        <!-- Jakarta Servlet API (compile-time only, provided by Jetty) -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -24,42 +34,37 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.10.1</version>
-</dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Compiler Plugin -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>11.0.20</version>
                 <configuration>
-                    <release>21</release>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <stopPort>8081</stopPort>
+                    <stopKey>stop</stopKey>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                        <war>${project.build.directory}/${project.build.finalName}.war</war>
+                    </webApp>
+                    <httpConnector>
+                        <host>0.0.0.0</host> <!-- Bind to all network interfaces -->
+                        <port>8080</port>
+                    </httpConnector>
                 </configuration>
             </plugin>
-
-            <!-- Jetty Maven Plugin for running WAR locally -->
-<plugin>
-    <groupId>org.eclipse.jetty</groupId>
-    <artifactId>jetty-maven-plugin</artifactId>
-    <version>11.0.20</version> <!-- stable release -->
-    <configuration>
-        <scanIntervalSeconds>1</scanIntervalSeconds>
-        <stopPort>8081</stopPort>
-        <stopKey>stop</stopKey>
-        <webApp>
-            <contextPath>/</contextPath>
-            <war>${project.build.directory}/${project.build.finalName}.war</war>
-        </webApp>
-        <httpConnector>
-            <port>8080</port>
-        </httpConnector>
-    </configuration>
-</plugin>
         </plugins>
     </build>
 </project>
