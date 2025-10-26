@@ -3,6 +3,7 @@ package com.example.order;
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("Testing for deployment");
         System.out.println("OrderProcessingManual running on Java " + System.getProperty("java.version"));
 
         OrderService orderService = new OrderService();
