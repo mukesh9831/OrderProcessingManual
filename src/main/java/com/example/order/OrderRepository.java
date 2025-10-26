@@ -1,4 +1,4 @@
-package src.main.java.com.example.order;
+package com.example.order;
 
 public class OrderRepository {
     public void save(Order order) {

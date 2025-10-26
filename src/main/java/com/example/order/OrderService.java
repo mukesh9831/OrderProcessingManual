@@ -1,4 +1,4 @@
-package src.main.java.com.example.order;
+package com.example.order;
 
 public class OrderService {
 
